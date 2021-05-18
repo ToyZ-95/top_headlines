@@ -9,13 +9,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool firstCall = true;
+
   Future<NewsModel> newsModel = null;
 
   @override
   void initState() {
     // TODO: implement initState
-    newsModel = APIManager().getNews();
+    //newsModel = APIManager().getNews();
     super.initState();
+  }
+
+  void refreshPage() {
+    newsModel = null;
+    newsModel = APIManager().getNews();
+    firstCall = false;
+    setState(() {});
   }
 
   List<Widget> getNewsWidgets(AsyncSnapshot<NewsModel> snapshot) {
@@ -26,39 +35,58 @@ class _HomePageState extends State<HomePage> {
       var article = snapshot.data.articles[i];
 
       newsWidgets.add(
-        Card(
-          child: Container(
-            child: Column(
+        Container(
+          padding: EdgeInsets.all(30.0),
+          child: Card(
+            elevation: 8,
+            shape: Border.all(
+              width: 2.0,
+              color: Colors.blue,
+            ),
+            shadowColor: Colors.blue,
+            child: Stack(
               children: [
+                article.urlToImage != null
+                    ? Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: Image(
+                          image: NetworkImage(article.urlToImage),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : SizedBox(),
                 Container(
-                  height: 200.0,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 8.0, vertical: 40.0),
+                  height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: Image(
-                    image: NetworkImage(article.urlToImage),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  height: 50.0,
-                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.bottomLeft,
                   child: Text(
                     article.title,
                     overflow: TextOverflow.clip,
                     style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    height: 300.0,
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      article.content,
-                      overflow: TextOverflow.clip,
-                    ),
+                        inherit: true,
+                        fontSize: 38.0,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                              // bottomLeft
+                              offset: Offset(-1.5, -1.5),
+                              color: Colors.black),
+                          Shadow(
+                              // bottomRight
+                              offset: Offset(1.5, -1.5),
+                              color: Colors.black),
+                          Shadow(
+                              // topRight
+                              offset: Offset(1.5, 1.5),
+                              color: Colors.black),
+                          Shadow(
+                              // topLeft
+                              offset: Offset(-1.5, 1.5),
+                              color: Colors.black),
+                        ]),
                   ),
                 ),
               ],
@@ -78,12 +106,18 @@ class _HomePageState extends State<HomePage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return DefaultTabController(
-            length: snapshot.data.totalResults,
+            length: snapshot.data.articles.length,
             child: Scaffold(
               appBar: AppBar(
                 title: Center(
                   child: Text('News App'),
                 ),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.refresh_rounded),
+                    onPressed: refreshPage,
+                  ),
+                ],
               ),
               body: TabBarView(
                 children: getNewsWidgets(snapshot),
@@ -97,9 +131,15 @@ class _HomePageState extends State<HomePage> {
                 title: Center(
                   child: Text('News App'),
                 ),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.refresh_rounded),
+                    onPressed: refreshPage,
+                  ),
+                ],
               ),
               body: Center(
-                child: CircularProgressIndicator(),
+                child: firstCall ? SizedBox() : CircularProgressIndicator(),
               ),
             ),
           );

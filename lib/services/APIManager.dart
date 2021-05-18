@@ -11,13 +11,15 @@ class APIManager {
     NewsModel newsModel;
 
     try {
-      //var response = await client.get(Uri(query: StringConstants.url));
-
       var uri = Uri.https('newsapi.org', '/v2/top-headlines', {
-        'sources': 'techcrunch',
-        'apiKey': '31f88efd99c94025bbd5cae58237d062'
+        'country': 'in',
+        'apiKey': StringConstants.newsAPIKey,
       });
 
+      // var uri = Uri.https('newsapi.org', '/v2/top-headlines', {
+      //   'country': 'in',
+      //   'apiKey': StringConstants.newsAPIKey,
+      // });
       var response = await client.get(uri);
 
       if (response.statusCode == 200) {
