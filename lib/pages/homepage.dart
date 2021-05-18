@@ -29,14 +29,34 @@ class _HomePageState extends State<HomePage> {
         Container(
           child: Column(
             children: [
-              Image.network(article.urlToImage),
-              Text(
-                article.title,
-                overflow: TextOverflow.ellipsis,
+              Container(
+                height: 200.0,
+                width: MediaQuery.of(context).size.width,
+                child: Image(
+                  image: NetworkImage(article.urlToImage),
+                  fit: BoxFit.fill,
+                ),
               ),
-              Text(
-                article.content,
-                overflow: TextOverflow.ellipsis,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                height: 50.0,
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  article.title,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                height: 300.0,
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  article.content,
+                  overflow: TextOverflow.clip,
+                ),
               ),
             ],
           ),
@@ -68,7 +88,16 @@ class _HomePageState extends State<HomePage> {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Center(
+                    child: Text('News App'),
+                  ),
+                ),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
             );
           }
         });
