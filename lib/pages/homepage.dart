@@ -26,39 +26,43 @@ class _HomePageState extends State<HomePage> {
       var article = snapshot.data.articles[i];
 
       newsWidgets.add(
-        Container(
-          child: Column(
-            children: [
-              Container(
-                height: 200.0,
-                width: MediaQuery.of(context).size.width,
-                child: Image(
-                  image: NetworkImage(article.urlToImage),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                height: 50.0,
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  article.title,
-                  overflow: TextOverflow.clip,
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
+        Card(
+          child: Container(
+            child: Column(
+              children: [
+                Container(
+                  height: 200.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image(
+                    image: NetworkImage(article.urlToImage),
+                    fit: BoxFit.fill,
                   ),
                 ),
-              ),
-              Container(
-                height: 300.0,
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  article.content,
-                  overflow: TextOverflow.clip,
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  height: 50.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    article.title,
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Container(
+                    height: 300.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      article.content,
+                      overflow: TextOverflow.clip,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -70,36 +74,37 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<NewsModel>(
-        future: newsModel,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return DefaultTabController(
-              length: snapshot.data.articles.length,
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Center(
-                    child: Text('News App'),
-                  ),
-                ),
-                body: TabBarView(
-                  children: getNewsWidgets(snapshot),
+      future: newsModel,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return DefaultTabController(
+            length: snapshot.data.totalResults,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Center(
+                  child: Text('News App'),
                 ),
               ),
-            );
-          } else {
-            return Center(
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Center(
-                    child: Text('News App'),
-                  ),
-                ),
-                body: Center(
-                  child: CircularProgressIndicator(),
+              body: TabBarView(
+                children: getNewsWidgets(snapshot),
+              ),
+            ),
+          );
+        } else {
+          return Center(
+            child: Scaffold(
+              appBar: AppBar(
+                title: Center(
+                  child: Text('News App'),
                 ),
               ),
-            );
-          }
-        });
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+      },
+    );
   }
 }
