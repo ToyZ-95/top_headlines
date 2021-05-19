@@ -16,7 +16,7 @@ class _NewsCardUIState extends State<NewsCardUI> {
     return Center(
       child: Container(
         height: MediaQuery.of(context).size.height - 300,
-        width: MediaQuery.of(context).size.width - 150,
+        width: MediaQuery.of(context).size.width - 100,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
@@ -45,7 +45,7 @@ class _NewsCardUIState extends State<NewsCardUI> {
             // ],
             ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               height: 200.0,
@@ -61,7 +61,9 @@ class _NewsCardUIState extends State<NewsCardUI> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(
+              height: 5,
+            ),
             Container(
               // margin: const EdgeInsets.symmetric(vertical: 5),
               child: Flexible(
@@ -72,7 +74,7 @@ class _NewsCardUIState extends State<NewsCardUI> {
                     child: Text(
                       widget.article.title,
                       style: TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -81,7 +83,7 @@ class _NewsCardUIState extends State<NewsCardUI> {
               ),
             ),
             SizedBox(
-              height: 35.0,
+              height: 15.0,
             ),
             Expanded(
               child: Container(
