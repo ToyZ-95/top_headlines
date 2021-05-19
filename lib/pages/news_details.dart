@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:news_app/models/NewsModel.dart';
 
 class NewsDetails extends StatefulWidget {
-  Image _articleImage;
-  Article _article;
+  final Image _articleImage;
+  final Article _article;
 
   NewsDetails(this._articleImage, this._article);
 
