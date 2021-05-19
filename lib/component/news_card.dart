@@ -20,12 +20,35 @@ class _NewsCardState extends State<NewsCard> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.lightBlue[500],
+              offset: Offset(-1.5, -1.5),
+              blurRadius: 2.0,
+            ),
+            BoxShadow(
+              color: Colors.lightBlue[500],
+              offset: Offset(-1.5, 1.5),
+              blurRadius: 2.0,
+            ),
+            BoxShadow(
+              color: Colors.lightBlue[500],
+              offset: Offset(1.5, -1.5),
+              blurRadius: 2.0,
+            ),
+            BoxShadow(
+              color: Colors.lightBlue[500],
+              offset: Offset(1.5, 1.5),
+              blurRadius: 2.0,
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               height: 200.0,
+              width: MediaQuery.of(context).size.width - 60,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10.0),
@@ -37,9 +60,10 @@ class _NewsCardState extends State<NewsCard> {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 5.0),
             Container(
               child: Flexible(
+                flex: 3,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -73,13 +97,34 @@ class _NewsCardState extends State<NewsCard> {
               ),
             ),
             SizedBox(
-              height: 50.0,
+              height: 20.0,
             ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text('Read Mode'),
+            Expanded(
+              child: ConstrainedBox(
+                constraints: BoxConstraints.tightFor(
+                    width: double.infinity, height: 50.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Read More',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 3.0,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0.0),
+                        topRight: Radius.circular(0.0),
+                        bottomLeft: Radius.circular(10.0),
+                        bottomRight: Radius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
