@@ -12,6 +12,8 @@ class NewsCard extends StatefulWidget {
 }
 
 class _NewsCardState extends State<NewsCard> {
+  Image image2;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -56,14 +58,17 @@ class _NewsCardState extends State<NewsCard> {
                   topRight: Radius.circular(10.0),
                 ),
                 child: widget.article.urlToImage != null
-                    ? Image(
-                        loadingBuilder: (context, child, progress) {
-                          return progress == null
-                              ? child
-                              : LinearProgressIndicator();
-                        },
-                        image: NetworkImage(widget.article.urlToImage),
-                        fit: BoxFit.fill,
+                    ? Hero(
+                        tag: widget.article,
+                        child: image2 = Image(
+                          loadingBuilder: (context, child, progress) {
+                            return progress == null
+                                ? child
+                                : LinearProgressIndicator();
+                          },
+                          image: NetworkImage(widget.article.urlToImage),
+                          fit: BoxFit.fill,
+                        ),
                       )
                     : SizedBox(),
               ),
@@ -117,7 +122,7 @@ class _NewsCardState extends State<NewsCard> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            NewsDetails(widget.article.content),
+                            NewsDetails(image2, widget.article),
                       ),
                     );
                   },

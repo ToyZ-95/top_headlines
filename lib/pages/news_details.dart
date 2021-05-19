@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/NewsModel.dart';
 
 class NewsDetails extends StatefulWidget {
   Image _articleImage;
-  String _articleContent;
+  Article _article;
 
-  NewsDetails(this._articleImage, this._articleContent);
+  NewsDetails(this._articleImage, this._article);
 
   @override
-  _NewsDetailsState createState() =>
-      _NewsDetailsState(_articleImage, _articleContent);
+  _NewsDetailsState createState() => _NewsDetailsState(_articleImage, _article);
 }
 
 class _NewsDetailsState extends State<NewsDetails> {
   Image articleImage;
-  String articleContent;
+  Article article;
 
-  _NewsDetailsState(this.articleImage, this.articleContent);
+  _NewsDetailsState(this.articleImage, this.article);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,22 @@ class _NewsDetailsState extends State<NewsDetails> {
         body: Container(
           child: Column(
             children: [
-              articleImage,
+              Container(
+                child: Hero(
+                  tag: article,
+                  child: articleImage,
+                ),
+              ),
               SizedBox(height: 20.0),
-              Text(
-                articleContent,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  article.content,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
