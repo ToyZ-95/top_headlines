@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/NewsModel.dart';
+import 'package:news_app/pages/news_details.dart';
 
 class NewsCard extends StatefulWidget {
   final Article article;
@@ -22,22 +23,22 @@ class _NewsCardState extends State<NewsCard> {
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.lightBlue[500],
+              color: Colors.white12,
               offset: Offset(-1.5, -1.5),
               blurRadius: 2.0,
             ),
             BoxShadow(
-              color: Colors.lightBlue[500],
+              color: Colors.white12,
               offset: Offset(-1.5, 1.5),
               blurRadius: 2.0,
             ),
             BoxShadow(
-              color: Colors.lightBlue[500],
+              color: Colors.white12,
               offset: Offset(1.5, -1.5),
               blurRadius: 2.0,
             ),
             BoxShadow(
-              color: Colors.lightBlue[500],
+              color: Colors.white12,
               offset: Offset(1.5, 1.5),
               blurRadius: 2.0,
             ),
@@ -54,13 +55,17 @@ class _NewsCardState extends State<NewsCard> {
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
                 ),
-                child: Image(
-                  loadingBuilder: (context, child, progress) {
-                    return progress == null ? child : LinearProgressIndicator();
-                  },
-                  image: NetworkImage(widget.article.urlToImage),
-                  fit: BoxFit.fill,
-                ),
+                child: widget.article.urlToImage != null
+                    ? Image(
+                        loadingBuilder: (context, child, progress) {
+                          return progress == null
+                              ? child
+                              : LinearProgressIndicator();
+                        },
+                        image: NetworkImage(widget.article.urlToImage),
+                        fit: BoxFit.fill,
+                      )
+                    : SizedBox(),
               ),
             ),
             SizedBox(height: 5.0),
@@ -107,7 +112,15 @@ class _NewsCardState extends State<NewsCard> {
                 constraints: BoxConstraints.tightFor(
                     width: double.infinity, height: 50.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NewsDetails(widget.article.content),
+                      ),
+                    );
+                  },
                   child: Text(
                     'Read More',
                     style: TextStyle(
