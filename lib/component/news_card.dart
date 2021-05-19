@@ -55,6 +55,9 @@ class _NewsCardState extends State<NewsCard> {
                   topRight: Radius.circular(10.0),
                 ),
                 child: Image(
+                  loadingBuilder: (context, child, progress) {
+                    return progress == null ? child : LinearProgressIndicator();
+                  },
                   image: NetworkImage(widget.article.urlToImage),
                   fit: BoxFit.fill,
                 ),
