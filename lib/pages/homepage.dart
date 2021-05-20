@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<NewsModel> newsModel = null;
+  Future<NewsModel> newsModel;
 
   @override
   void initState() {

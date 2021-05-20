@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:news_app/constants/string_constants.dart';
+import 'package:news_app/constants/api_constants.dart';
 import 'package:news_app/models/NewsModel.dart';
 
 class APIManager {
@@ -13,7 +12,7 @@ class APIManager {
     try {
       var uri = Uri.https('newsapi.org', '/v2/top-headlines', {
         'country': 'in',
-        'apiKey': StringConstants.newsAPIKey,
+        'apiKey': APIConstants.newsAPIKey,
       });
 
       // var uri = Uri.https('newsapi.org', '/v2/top-headlines', {
