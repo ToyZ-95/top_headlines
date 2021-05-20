@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/NewsModel.dart';
+import 'package:news_app/pages/news_details.dart';
 
 class NewsCardUI extends StatefulWidget {
   final Article article;
@@ -11,6 +12,8 @@ class NewsCardUI extends StatefulWidget {
 }
 
 class _NewsCardUIState extends State<NewsCardUI> {
+  Image image2;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -55,10 +58,20 @@ class _NewsCardUIState extends State<NewsCardUI> {
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
                 ),
-                child: Image(
-                  image: NetworkImage(widget.article.urlToImage),
-                  fit: BoxFit.cover,
-                ),
+                child: widget.article.urlToImage != null
+                    ? Hero(
+                        tag: widget.article,
+                        child: image2 = Image(
+                          loadingBuilder: (context, child, progress) {
+                            return progress == null
+                                ? child
+                                : LinearProgressIndicator();
+                          },
+                          image: NetworkImage(widget.article.urlToImage),
+                          fit: BoxFit.fill,
+                        ),
+                      )
+                    : SizedBox(),
               ),
             ),
             SizedBox(
@@ -90,7 +103,15 @@ class _NewsCardUIState extends State<NewsCardUI> {
                 alignment: Alignment.centerLeft,
                 padding: const EdgeInsets.only(left: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NewsDetails(image2, widget.article),
+                      ),
+                    );
+                  },
                   child: Text(
                     'Read More',
                     style: TextStyle(
