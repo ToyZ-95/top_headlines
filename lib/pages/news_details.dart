@@ -21,27 +21,33 @@ class _NewsDetailsState extends State<NewsDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News Details'),
+        title: Text(
+          'News Details',
+        ),
       ),
       body: Container(
         child: Column(
           children: [
             Container(
-              child: Hero(
-                tag: article,
-                child: articleImage,
-              ),
+              child: articleImage == null
+                  ? SizedBox()
+                  : Hero(
+                      tag: article,
+                      child: articleImage,
+                    ),
             ),
             SizedBox(height: 20.0),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                article.description,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: article.description != null
+                  ? Text(
+                      article.description,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    )
+                  : SizedBox(),
             ),
           ],
         ),

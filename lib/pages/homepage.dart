@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/component/news_card.dart';
 import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/services/APIManager.dart';
@@ -10,22 +9,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool firstCall = true;
-
   Future<NewsModel> newsModel = null;
 
   @override
   void initState() {
     // TODO: implement initState
-    //newsModel = APIManager().getNews();
-    super.initState();
-  }
-
-  void refreshPage() {
-    newsModel = null;
     newsModel = APIManager().getNews();
-    firstCall = false;
-    setState(() {});
+    super.initState();
   }
 
   List<Widget> getNewsWidgets(AsyncSnapshot<NewsModel> snapshot) {
@@ -78,12 +68,6 @@ class _HomePageState extends State<HomePage> {
                 title: Center(
                   child: Text('News App'),
                 ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.refresh_rounded),
-                    onPressed: refreshPage,
-                  ),
-                ],
               ),
               body: Container(
                 color: Colors.white,
@@ -100,29 +84,13 @@ class _HomePageState extends State<HomePage> {
                 title: Center(
                   child: Text('News App'),
                 ),
-                actions: [
-                  IconButton(
-                    icon: Icon(Icons.refresh_rounded),
-                    onPressed: refreshPage,
-                  ),
-                ],
               ),
               body: Container(
                 color: Colors.white,
                 child: Center(
-                  child: firstCall
-                      ? SizedBox(
-                          child: Text(
-                            'Welcome to News App',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30.0,
-                            ),
-                          ),
-                        )
-                      : CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                        ),
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
                 ),
               ),
             ),
