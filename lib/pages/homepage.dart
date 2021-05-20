@@ -3,6 +3,8 @@ import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/services/APIManager.dart';
 
+import '../component/news_card_ui.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -13,24 +15,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     newsModel = APIManager().getNews();
     super.initState();
-  }
-
-  List<Widget> getNewsWidgets(AsyncSnapshot<NewsModel> snapshot) {
-    int length = snapshot.data.articles.length;
-    List<Widget> newsWidgets = [];
-
-    for (int i = 0; i < length; i++) {
-      var article = snapshot.data.articles[i];
-
-      newsWidgets.add(
-        NewsCardUI(article),
-      );
-    }
-
-    return newsWidgets;
   }
 
   Widget testNewsCardDesign() {
@@ -56,47 +42,43 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //return testNewsCardDesign();
-    return FutureBuilder<NewsModel>(
-      future: newsModel,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return DefaultTabController(
-            length: snapshot.data.articles.length,
-            child: Scaffold(
-              appBar: AppBar(
-                title: Center(
-                  child: Text('News App'),
-                ),
-              ),
-              body: Container(
-                color: Colors.white,
-                child: TabBarView(
-                  children: getNewsWidgets(snapshot),
-                ),
-              ),
-            ),
-          );
-        } else {
-          return Center(
-            child: Scaffold(
-              appBar: AppBar(
-                title: Center(
-                  child: Text('News App'),
-                ),
-              ),
-              body: Container(
-                color: Colors.white,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }
-      },
+    final PageController pageController = PageController(initialPage: 0);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text('News App'),
+        ),
+      ),
+      body: Container(
+        child: Center(
+          child: FutureBuilder(
+            future: newsModel,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return PageView.builder(
+                  itemCount: snapshot.data.articles.length,
+                  scrollDirection: Axis.vertical,
+                  controller: pageController,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: NewsCardUI(
+                          snapshot.data.articles[index],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ),
+      ),
     );
   }
 }
