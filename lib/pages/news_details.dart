@@ -36,7 +36,7 @@ class _NewsDetailsState extends State<NewsDetails> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  article.content,
+                  article.description,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
