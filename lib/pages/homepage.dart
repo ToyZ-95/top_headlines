@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/component/news_card.dart';
-import 'package:news_app/constants/string_constants.dart';
+import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/services/APIManager.dart';
 
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       var article = snapshot.data.articles[i];
 
       newsWidgets.add(
-        NewsCard(article),
+        NewsCardUI(article),
       );
     }
 
@@ -52,8 +52,8 @@ class _HomePageState extends State<HomePage> {
     //     ),
     //   ),
     //   body: Container(
-    //     color: Colors.blue,
-    //     child: NewsCard(
+    //     color: Colors.white,
+    //     child: NewsCardUI(
     //       Article(
     //         title:
     //             'Chhattisgarh CGBSE 10th Result 2021 LIVE Updates: Website down, call on these numbers',
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               body: Container(
-                color: Colors.blue,
+                color: Colors.white,
                 child: TabBarView(
                   children: getNewsWidgets(snapshot),
                 ),
@@ -104,14 +104,14 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               body: Container(
-                color: Colors.blue,
+                color: Colors.white,
                 child: Center(
                   child: firstCall
                       ? SizedBox(
                           child: Text(
                             'Welcome to News App',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 30.0,
                             ),
                           ),
