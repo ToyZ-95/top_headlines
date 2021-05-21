@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('News App'),
+          child: Text('Top Headlines'),
         ),
       ),
       body: Container(
