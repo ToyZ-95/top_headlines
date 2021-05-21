@@ -6,6 +6,8 @@ import 'package:news_app/services/APIManager.dart';
 
 import '../component/news_card_ui.dart';
 
+//Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0)
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
