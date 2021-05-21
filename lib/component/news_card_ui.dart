@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/pages/news_details.dart';
+import 'dart:math';
 
 class NewsCardUI extends StatefulWidget {
   final Article article;
@@ -21,7 +22,8 @@ class _NewsCardUIState extends State<NewsCardUI> {
         height: MediaQuery.of(context).size.height - 300,
         width: MediaQuery.of(context).size.width - 100,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color((Random().nextDouble() * 0xFFFFFF).toInt())
+                .withOpacity(1.0),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(

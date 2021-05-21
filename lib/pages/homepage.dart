@@ -3,7 +3,6 @@ import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/constants/api_constants.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/services/APIManager.dart';
-
 import '../component/news_card_ui.dart';
 
 //Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0)
@@ -76,10 +75,8 @@ class _HomePageState extends State<HomePage> {
                           return Container(
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
-                            child: Center(
-                              child: NewsCardUI(
-                                snapshot.data.articles[index],
-                              ),
+                            child: NewsCardUI(
+                              snapshot.data.articles[index],
                             ),
                           );
                         },
