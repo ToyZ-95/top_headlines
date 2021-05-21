@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/component/news_card_ui.dart';
+import 'package:news_app/constants/api_constants.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/services/APIManager.dart';
 
@@ -50,35 +51,44 @@ class _HomePageState extends State<HomePage> {
           child: Text('Top Headlines'),
         ),
       ),
-      body: Container(
-        child: Center(
-          child: FutureBuilder(
-            future: newsModel,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return PageView.builder(
-                  itemCount: snapshot.data.articles.length,
-                  scrollDirection: Axis.vertical,
-                  controller: pageController,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: NewsCardUI(
-                          snapshot.data.articles[index],
-                        ),
-                      ),
-                    );
+      body: APIConstants.newsAPIKey == 'YOUR_API_KEY'
+          ? Center(
+              child: Text(
+                'Please provide API Key',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            )
+          : Container(
+              child: Center(
+                child: FutureBuilder(
+                  future: newsModel,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return PageView.builder(
+                        itemCount: snapshot.data.articles.length,
+                        scrollDirection: Axis.vertical,
+                        controller: pageController,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: Center(
+                              child: NewsCardUI(
+                                snapshot.data.articles[index],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
                   },
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          ),
-        ),
-      ),
+                ),
+              ),
+            ),
     );
   }
 }
