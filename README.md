@@ -8,3 +8,10 @@ A News App created in Flutter which gives you top news.
  * ###  1. Get your news.org api key.
  * ###  2. Create api_constants.dart inside constants folder.add your api key inside it.
  * ###  3. Add your api key inside it.
+
+## Functionalities :
+- [x] Basic functionality.
+- [ ] Scroll mode - Horizontal/Vertical
+- [ ] Country Selection
+- [ ] Category Selection
+- [ ] Search Option
