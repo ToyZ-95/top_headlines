@@ -5,7 +5,7 @@ A News App created in Flutter which gives you top news.
 
 
  ##  Instruction
- Replace the API Key field with your own key, for key visit newsapi.org and create your id.
+ Replace the API Key field with your own key, for key visit [newsapi.org](https://newsapi.org/) and create your id.
  
  ```
   |-- lib
