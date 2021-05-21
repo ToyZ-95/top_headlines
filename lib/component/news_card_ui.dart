@@ -22,8 +22,6 @@ class _NewsCardUIState extends State<NewsCardUI> {
         height: MediaQuery.of(context).size.height - 300,
         width: MediaQuery.of(context).size.width - 100,
         decoration: BoxDecoration(
-            color: Color((Random().nextDouble() * 0xFFFFFF).toInt())
-                .withOpacity(1.0),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(
