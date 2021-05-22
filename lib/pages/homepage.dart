@@ -66,16 +66,27 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       Container(
-                        height: 100.0,
+                        height: 80.0,
                         width: MediaQuery.of(context).size.width,
                         child: Row(
                           children: [
+                            SizedBox(
+                              width: 10.0,
+                            ),
                             Text(
                               'Horizontal',
+                              textScaleFactor: 1.0,
+                              style: TextStyle(
+                                letterSpacing: 2.0,
+                              ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.refresh_rounded),
+                            Switch(
+                              value: horizontal,
+                              onChanged: (value) {
+                                setState(() {
+                                  horizontal = value;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -90,7 +101,9 @@ class _HomePageState extends State<HomePage> {
                               if (snapshot.hasData) {
                                 return PageView.builder(
                                   itemCount: snapshot.data.articles.length,
-                                  scrollDirection: Axis.vertical,
+                                  scrollDirection: !horizontal
+                                      ? Axis.vertical
+                                      : Axis.horizontal,
                                   controller: pageController,
                                   itemBuilder: (context, index) {
                                     return Container(
