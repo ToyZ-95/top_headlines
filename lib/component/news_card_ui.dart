@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/NewsModel.dart';
 import 'package:news_app/pages/news_details.dart';
-import 'dart:math';
 
 class NewsCardUI extends StatefulWidget {
   final Article article;

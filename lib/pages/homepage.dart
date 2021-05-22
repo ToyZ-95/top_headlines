@@ -40,10 +40,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  final PageController pageController = PageController(initialPage: 0);
+  bool horizontal = false;
+
   @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController(initialPage: 0);
-
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -61,28 +62,56 @@ class _HomePageState extends State<HomePage> {
             )
           : Container(
               child: Center(
-                child: FutureBuilder(
-                  future: newsModel,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return PageView.builder(
-                        itemCount: snapshot.data.articles.length,
-                        scrollDirection: Axis.vertical,
-                        controller: pageController,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: NewsCardUI(
-                              snapshot.data.articles[index],
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 100.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Text(
+                              'Horizontal',
                             ),
-                          );
-                        },
-                      );
-                    } else {
-                      return CircularProgressIndicator();
-                    }
-                  },
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.refresh_rounded),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height - 100,
+                          width: double.infinity,
+                          child: FutureBuilder(
+                            future: newsModel,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return PageView.builder(
+                                  itemCount: snapshot.data.articles.length,
+                                  scrollDirection: Axis.vertical,
+                                  controller: pageController,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: NewsCardUI(
+                                        snapshot.data.articles[index],
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
