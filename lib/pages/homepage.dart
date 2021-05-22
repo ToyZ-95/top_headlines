@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/component/contry_dropdown.dart';
 import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/constants/api_constants.dart';
 import 'package:news_app/models/NewsModel.dart';
@@ -12,7 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<NewsModel> newsModel;
-
   @override
   void initState() {
     newsModel = APIManager().getNews();
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
 
   final PageController pageController = PageController(initialPage: 0);
   bool horizontal = false;
-
+  String countryDropDownValue = 'India';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,73 +90,57 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-      drawer: Drawer(
-        elevation: 0.0,
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: ListView(
-            children: [
-              Card(
-                color: Colors.blue,
-                child: ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                  title: Text(
-                    'Horizontal',
-                    textScaleFactor: 1.2,
-                    style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return StatefulBuilder(builder:
+                  (BuildContext context, StateSetter setBottomSheetState) {
+                return Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
                   ),
-                  trailing: Switch(
-                    value: horizontal,
-                    activeTrackColor: Colors.white,
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          horizontal = value;
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                child: Card(
-                  color: Colors.blue,
-                  child: ExpansionTile(
-                    title: Text(
-                      'Country',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white,
-                    ),
-                    children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.home_rounded,
-                          color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Switch(
+                              value: horizontal,
+                              onChanged: (value) {
+                                setBottomSheetState(() {
+                                  setState(() {
+                                    horizontal = value;
+                                  });
+                                });
+                              },
+                              activeTrackColor: Colors.white,
+                              activeColor: Colors.white,
+                            ),
+                            Text(
+                              'Horizontal Scroll',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
                         ),
-                        title: Text('Home'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text('Profile'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.settings),
-                        title: Text('Settings'),
-                      ),
-                    ],
+                        // SizedBox(width: 30.0),
+                        // Column(
+                        //   children: [
+                        //     CountryDropDown(),
+                        //   ],
+                        // ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                );
+              });
+            },
+          );
+        },
+        child: const Icon(Icons.arrow_upward_rounded),
       ),
     );
   }

@@ -1,3 +1,3 @@
 class APIConstants {
-  static final String newsAPIKey = '31f88efd99c94025bbd5cae58237d062';
+  static final String newsAPIKey = 'YOUR_API_KEY';
 }
