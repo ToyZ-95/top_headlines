@@ -62,72 +62,102 @@ class _HomePageState extends State<HomePage> {
             )
           : Container(
               child: Center(
-                child: Container(
-                  child: Column(
+                child: FutureBuilder(
+                  future: newsModel,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return PageView.builder(
+                        itemCount: snapshot.data.articles.length,
+                        scrollDirection:
+                            !horizontal ? Axis.vertical : Axis.horizontal,
+                        controller: pageController,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: NewsCardUI(
+                              snapshot.data.articles[index],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+      drawer: Drawer(
+        elevation: 0.0,
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+          ),
+          child: ListView(
+            children: [
+              Card(
+                color: Colors.blue,
+                child: ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  title: Text(
+                    'Horizontal',
+                    textScaleFactor: 1.2,
+                    style: TextStyle(color: Colors.white, letterSpacing: 2.0),
+                  ),
+                  trailing: Switch(
+                    value: horizontal,
+                    activeTrackColor: Colors.white,
+                    onChanged: (value) {
+                      setState(
+                        () {
+                          horizontal = value;
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Container(
+                child: Card(
+                  color: Colors.blue,
+                  child: ExpansionTile(
+                    title: Text(
+                      'Country',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                    ),
                     children: [
-                      Container(
-                        height: 80.0,
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              'Horizontal',
-                              textScaleFactor: 1.0,
-                              style: TextStyle(
-                                letterSpacing: 2.0,
-                              ),
-                            ),
-                            Switch(
-                              value: horizontal,
-                              onChanged: (value) {
-                                setState(() {
-                                  horizontal = value;
-                                });
-                              },
-                            ),
-                          ],
+                      ListTile(
+                        leading: Icon(
+                          Icons.home_rounded,
+                          color: Colors.white,
                         ),
+                        title: Text('Home'),
                       ),
-                      Expanded(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height - 100,
-                          width: double.infinity,
-                          child: FutureBuilder(
-                            future: newsModel,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return PageView.builder(
-                                  itemCount: snapshot.data.articles.length,
-                                  scrollDirection: !horizontal
-                                      ? Axis.vertical
-                                      : Axis.horizontal,
-                                  controller: pageController,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: NewsCardUI(
-                                        snapshot.data.articles[index],
-                                      ),
-                                    );
-                                  },
-                                );
-                              } else {
-                                return CircularProgressIndicator();
-                              }
-                            },
-                          ),
-                        ),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text('Profile'),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text('Settings'),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
