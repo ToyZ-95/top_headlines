@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/countries.dart';
 
 class CustomDropDown extends StatefulWidget {
   final List<String> dropDownItems;
-  String selectedItem;
-  CustomDropDown(this.dropDownItems, this.selectedItem);
+  CustomDropDown(this.dropDownItems);
 
   @override
   _CustomDropDownState createState() =>
-      _CustomDropDownState(this.dropDownItems, this.selectedItem);
+      _CustomDropDownState(this.dropDownItems);
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
   final List<String> items;
-  String selectedItem;
 
-  _CustomDropDownState(this.items, this.selectedItem);
+  _CustomDropDownState(this.items);
 
   @override
   void initState() {
@@ -44,11 +43,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
   Widget build(BuildContext context) {
     return DropdownButton(
       dropdownColor: Colors.blue,
-      value: selectedItem == null ? null : selectedItem,
+      value: Countries.selectedCountry == ''
+          ? items[0]
+          : Countries.selectedCountry,
       items: createDropdownItems(items),
       onChanged: (value) {
         setState(() {
-          selectedItem = value;
+          Countries.selectedCountry = value;
         });
       },
     );

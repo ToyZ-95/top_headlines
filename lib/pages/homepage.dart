@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   Map<String, String> countriesAndCode;
   @override
   void initState() {
+    print('Init state called');
     newsModel = APIManager().getNews();
     countriesAndCode = Countries.getCountriesAndCode();
     super.initState();
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   final PageController pageController = PageController(initialPage: 0);
   bool horizontal = false;
-  static String selectedCountry;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,62 +99,73 @@ class _HomePageState extends State<HomePage> {
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return StatefulBuilder(builder:
-                  (BuildContext context, StateSetter setBottomSheetState) {
-                return Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            Switch(
-                              value: horizontal,
-                              onChanged: (value) {
-                                setBottomSheetState(() {
-                                  setState(() {
-                                    horizontal = value;
-                                  });
-                                });
-                              },
-                              activeTrackColor: Colors.white,
-                              activeColor: Colors.white,
-                            ),
-                            Text(
-                              'Horizontal Scroll',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 32.0),
-                        Column(
-                          children: [
-                            SizedBox(height: 8.0),
-                            CustomDropDown(
-                              countriesAndCode.keys.toList(),
-                              selectedCountry,
-                            ),
-                          ],
-                        ),
-                        ElevatedButton(onPressed: () {
-                          Navigator.pop(context, CustomDropDown.)
-                        }, child: Text('Save'),),
-                        // SizedBox(width: 16.0),
-                        // Column(
-                        //   children: [
-                        //     SizedBox(height: 8.0),
-                        //     CountryDropDown(),
-                        //   ],
-                        // ),
-                      ],
+              return StatefulBuilder(
+                builder:
+                    (BuildContext context, StateSetter setBottomSheetState) {
+                  return Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
                     ),
-                  ),
-                );
-              });
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Switch(
+                                value: horizontal,
+                                onChanged: (value) {
+                                  setBottomSheetState(() {
+                                    setState(() {
+                                      horizontal = value;
+                                    });
+                                  });
+                                },
+                                activeTrackColor: Colors.white,
+                                activeColor: Colors.white,
+                              ),
+                              Text(
+                                'Horizontal Scroll',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 32.0),
+                          Column(
+                            children: [
+                              SizedBox(height: 8.0),
+                              CustomDropDown(
+                                countriesAndCode.keys.toList(),
+                              ),
+                              SizedBox(height: 64.0),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (Countries.selectedCountry == '') {
+                                    Countries.selectedCountryCode = 'in';
+                                  } else {
+                                    Countries.selectedCountryCode =
+                                        countriesAndCode[
+                                            Countries.selectedCountry];
+                                  }
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(),
+                                    ),
+                                  );
+                                },
+                                child: Text('Save'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
             },
           );
         },

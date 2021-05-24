@@ -1,4 +1,6 @@
 class Countries {
+  static String selectedCountry = '';
+  static String selectedCountryCode = '';
   static Map<String, String> getCountriesAndCode() {
     Map<String, String> countriesAndCode = Map();
 
