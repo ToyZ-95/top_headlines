@@ -149,7 +149,6 @@ class _HomePageState extends State<HomePage> {
                                             Countries.selectedCountry];
                                   }
                                   Navigator.pop(context);
-                                  Navigator.pop(context);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
