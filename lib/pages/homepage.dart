@@ -15,13 +15,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Future<NewsModel> newsModel;
   Map<String, String> countriesAndCode;
-  @override
-  void initState() {
-    print('Init state called');
-    newsModel = APIManager().getNews();
-    countriesAndCode = Countries.getCountriesAndCode();
-    super.initState();
-  }
 
   Widget testNewsCardDesign() {
     return Scaffold(
@@ -49,6 +42,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    newsModel = APIManager().getNews();
+    countriesAndCode = Countries.getCountriesAndCode();
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -149,12 +144,7 @@ class _HomePageState extends State<HomePage> {
                                             Countries.selectedCountry];
                                   }
                                   Navigator.pop(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomePage(),
-                                    ),
-                                  );
+                                  setState(() {});
                                 },
                                 child: Text('Save'),
                               ),
