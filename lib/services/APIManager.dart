@@ -17,9 +17,6 @@ class APIManager {
             : Countries.selectedCountryCode,
         'apiKey': APIConstants.newsAPIKey,
       });
-
-      print(uri.toString());
-
       var response = await client.get(uri);
 
       if (response.statusCode == 200) {
