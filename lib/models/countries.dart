@@ -1,14 +1,15 @@
 class Countries {
-  static List<String> getCountries() {
-    List<String> countries = [];
-    countries.add('India');
-    countries.add('USA');
-    countries.add('UAE');
-    countries.add('Argentina');
-    countries.add('Austria');
-    countries.add('Australia');
-    countries.add('Belgium');
-    countries.add('UK');
-    return countries;
+  static Map<String, String> getCountriesAndCode() {
+    Map<String, String> countriesAndCode = Map();
+
+    countriesAndCode['India'] = 'in';
+    countriesAndCode['USA'] = 'us';
+    countriesAndCode['UAE'] = 'ae';
+    countriesAndCode['Argentina'] = 'ar';
+    countriesAndCode['Austria'] = 'au';
+    countriesAndCode['Australia'] = 'at';
+    countriesAndCode['Belgium'] = 'be';
+    countriesAndCode['UK'] = 'gb';
+    return countriesAndCode;
   }
 }

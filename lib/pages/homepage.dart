@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/component/contry_dropdown.dart';
+import 'package:news_app/component/custom_dropdown.dart';
 import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/constants/api_constants.dart';
 import 'package:news_app/models/NewsModel.dart';
+import 'package:news_app/models/countries.dart';
 import 'package:news_app/services/APIManager.dart';
 import '../component/news_card_ui.dart';
 
@@ -13,9 +14,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<NewsModel> newsModel;
+  Map<String, String> countriesAndCode;
   @override
   void initState() {
     newsModel = APIManager().getNews();
+    countriesAndCode = Countries.getCountriesAndCode();
     super.initState();
   }
 
@@ -42,7 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   final PageController pageController = PageController(initialPage: 0);
   bool horizontal = false;
-  String countryDropDownValue = 'India';
+  static String selectedCountry;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,9 +129,23 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                        // SizedBox(width: 30.0),
+                        SizedBox(width: 32.0),
+                        Column(
+                          children: [
+                            SizedBox(height: 8.0),
+                            CustomDropDown(
+                              countriesAndCode.keys.toList(),
+                              selectedCountry,
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(onPressed: () {
+                          Navigator.pop(context, CustomDropDown.)
+                        }, child: Text('Save'),),
+                        // SizedBox(width: 16.0),
                         // Column(
                         //   children: [
+                        //     SizedBox(height: 8.0),
                         //     CountryDropDown(),
                         //   ],
                         // ),
