@@ -21,6 +21,6 @@ A News App created in Flutter which gives you top news.
 ## Functionalities :
 - [x] Basic functionality.
 - [x] Scroll mode - Horizontal/Vertical
-- [ ] Country Selection
+- [x] Country Selection
 - [ ] Category Selection
 - [ ] Search Option
