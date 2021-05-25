@@ -41,17 +41,20 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      dropdownColor: Colors.blue,
-      value: Countries.selectedCountry == ''
-          ? items[0]
-          : Countries.selectedCountry,
-      items: createDropdownItems(items),
-      onChanged: (value) {
-        setState(() {
-          Countries.selectedCountry = value;
-        });
-      },
+    return DropdownButtonHideUnderline(
+      child: DropdownButton(
+        iconEnabledColor: Colors.white,
+        dropdownColor: Colors.blue,
+        value: Countries.selectedCountry == ''
+            ? items[0]
+            : Countries.selectedCountry,
+        items: createDropdownItems(items),
+        onChanged: (value) {
+          setState(() {
+            Countries.selectedCountry = value;
+          });
+        },
+      ),
     );
   }
 }

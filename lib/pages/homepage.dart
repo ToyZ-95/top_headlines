@@ -91,14 +91,20 @@ class _HomePageState extends State<HomePage> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
+          var bottomSheetController = showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
             context: context,
             builder: (BuildContext context) {
               return StatefulBuilder(
                 builder:
                     (BuildContext context, StateSetter setBottomSheetState) {
                   return Container(
-                    height: 200,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: Colors.blue,
                     ),
@@ -126,14 +132,30 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          SizedBox(width: 32.0),
+                          SizedBox(width: 16.0),
                           Column(
                             children: [
-                              SizedBox(height: 8.0),
+                              Text(
+                                'Country',
+                                textScaleFactor: 1.2,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.0,
+                              ),
                               CustomDropDown(
                                 countriesAndCode.keys.toList(),
                               ),
-                              SizedBox(height: 64.0),
+                            ],
+                          ),
+                          SizedBox(width: 16.0),
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 8.0,
+                              ),
                               ElevatedButton(
                                 onPressed: () {
                                   if (Countries.selectedCountry == '') {
@@ -159,7 +181,7 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
-        child: const Icon(Icons.arrow_upward_rounded),
+        child: const Icon(Icons.arrow_upward),
       ),
     );
   }
