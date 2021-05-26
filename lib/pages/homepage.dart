@@ -137,13 +137,13 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text(
                                 'Country',
-                                textScaleFactor: 1.2,
+                                textScaleFactor: 1.3,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
                               SizedBox(
-                                height: 8.0,
+                                height: 9.0,
                               ),
                               CustomDropDown(
                                 countriesAndCode.keys.toList(),
