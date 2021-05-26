@@ -3,6 +3,7 @@ import 'package:news_app/component/custom_dropdown.dart';
 import 'package:news_app/component/news_card_ui.dart';
 import 'package:news_app/constants/api_constants.dart';
 import 'package:news_app/models/NewsModel.dart';
+import 'package:news_app/models/categories.dart';
 import 'package:news_app/models/countries.dart';
 import 'package:news_app/services/APIManager.dart';
 import '../component/news_card_ui.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Future<NewsModel> newsModel;
   Map<String, String> countriesAndCode;
-
+  List<String> categories;
   Widget testNewsCardDesign() {
     return Scaffold(
       appBar: AppBar(
@@ -41,54 +42,87 @@ class _HomePageState extends State<HomePage> {
   bool horizontal = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    countriesAndCode = Countries.getCountriesAndCode();
+    categories = Categories.getCategories();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     newsModel = APIManager().getNews();
-    countriesAndCode = Countries.getCountriesAndCode();
+
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text('Top Headlines'),
-        ),
-      ),
-      body: APIConstants.newsAPIKey == 'YOUR_API_KEY'
-          ? Center(
-              child: Text(
-                'Please provide API Key',
-                style: TextStyle(
-                  fontSize: 20,
+      body: SafeArea(
+        child: APIConstants.newsAPIKey == 'YOUR_API_KEY'
+            ? Center(
+                child: Text(
+                  'Please provide API Key',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            )
-          : Container(
-              child: Center(
-                child: FutureBuilder(
-                  future: newsModel,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return PageView.builder(
-                        itemCount: snapshot.data.articles.length,
-                        scrollDirection:
-                            !horizontal ? Axis.vertical : Axis.horizontal,
-                        controller: pageController,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: NewsCardUI(
-                              snapshot.data.articles[index],
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            margin: EdgeInsets.only(top: 16.0, left: 8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  Categories.selectedCategory =
+                                      categories[index];
+                                });
+                              },
+                              child: Center(
+                                child: Text(categories[index]),
+                              ),
                             ),
                           );
+                        }),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Center(
+                      child: FutureBuilder(
+                        future: newsModel,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return PageView.builder(
+                              itemCount: snapshot.data.articles.length,
+                              scrollDirection:
+                                  !horizontal ? Axis.vertical : Axis.horizontal,
+                              controller: pageController,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: NewsCardUI(
+                                    snapshot.data.articles[index],
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
                         },
-                      );
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -104,57 +138,63 @@ class _HomePageState extends State<HomePage> {
                 builder:
                     (BuildContext context, StateSetter setBottomSheetState) {
                   return Container(
-                    height: 100,
+                    height: 200,
                     decoration: BoxDecoration(
                       color: Colors.blue,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(
+                      child: Column(
                         children: [
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Switch(
-                                value: horizontal,
-                                onChanged: (value) {
-                                  setBottomSheetState(() {
-                                    setState(() {
-                                      horizontal = value;
-                                    });
-                                  });
-                                },
-                                activeTrackColor: Colors.white,
-                                activeColor: Colors.white,
+                              Column(
+                                children: [
+                                  Switch(
+                                    value: horizontal,
+                                    onChanged: (value) {
+                                      setBottomSheetState(() {
+                                        setState(() {
+                                          horizontal = value;
+                                        });
+                                      });
+                                    },
+                                    activeTrackColor: Colors.white,
+                                    activeColor: Colors.white,
+                                  ),
+                                  Text(
+                                    'Horizontal Scroll',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                'Horizontal Scroll',
-                                style: TextStyle(color: Colors.white),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 9.0,
+                                  ),
+                                  Text(
+                                    'Country',
+                                    textScaleFactor: 1.3,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 9.0,
+                                  ),
+                                  CustomDropDown(
+                                    countriesAndCode.keys.toList(),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          SizedBox(width: 16.0),
-                          Column(
-                            children: [
-                              Text(
-                                'Country',
-                                textScaleFactor: 1.3,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 9.0,
-                              ),
-                              CustomDropDown(
-                                countriesAndCode.keys.toList(),
-                              ),
-                            ],
-                          ),
-                          SizedBox(width: 16.0),
                           Column(
                             children: [
                               SizedBox(
-                                height: 8.0,
+                                height: 48.0,
                               ),
                               ElevatedButton(
                                 onPressed: () {
