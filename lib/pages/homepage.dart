@@ -65,7 +65,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               )
             : Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
                     child: ListView.builder(
@@ -73,15 +72,20 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                         itemCount: categories.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Card(
-                            margin: EdgeInsets.only(top: 16.0, left: 8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  Categories.selectedCategory =
-                                      categories[index];
-                                });
-                              },
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Categories.selectedCategory = categories[index];
+                              });
+                            },
+                            child: Container(
+                              width: 150.0,
+                              margin: EdgeInsets.only(
+                                  top: 16.0, left: 8.0, right: 8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                               child: Center(
                                 child: Text(categories[index]),
                               ),
@@ -90,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                         }),
                   ),
                   Expanded(
-                    flex: 5,
+                    flex: 7,
                     child: Center(
                       child: FutureBuilder(
                         future: newsModel,
