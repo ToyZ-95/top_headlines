@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     countriesAndCode = Countries.getCountriesAndCode();
     categories = Categories.getCategories();
     super.initState();

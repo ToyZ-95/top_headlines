@@ -14,8 +14,6 @@ class APIManager {
     try {
       Uri uri;
       if (Categories.selectedCategory == 'General') {
-        print('inside if');
-
         uri = Uri.https(
           'newsapi.org',
           '/v2/top-headlines',
@@ -27,7 +25,6 @@ class APIManager {
           },
         );
       } else {
-        print('inside else');
         uri = Uri.https(
           'newsapi.org',
           '/v2/top-headlines',
