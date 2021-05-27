@@ -1,4 +1,4 @@
-# Top Headlines
+# Top Headlines (Top News of about 51 Countries)
 A News App created in Flutter which gives you top-headlines of about 51 countries.
 
 <img src="https://user-images.githubusercontent.com/62109756/119769701-88aa2f00-bed8-11eb-84cb-48c98b87cc8f.gif" width="250" height="450"/> <img src="https://user-images.githubusercontent.com/62109756/119769986-2c93da80-bed9-11eb-8746-fc8cd4d90267.gif" width="250" height="450"/> <img src="https://user-images.githubusercontent.com/62109756/119770005-374e6f80-bed9-11eb-830a-bc656c8e85bf.gif" width="250" height="450"/> <img src="https://user-images.githubusercontent.com/62109756/119770661-1e928980-beda-11eb-82f9-4dc90634fc53.gif" width="250" height="450"/> <img src="https://user-images.githubusercontent.com/62109756/119770644-16d2e500-beda-11eb-8497-1c3f53c06a18.gif" width="250" height="450"/>
